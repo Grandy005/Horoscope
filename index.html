@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    <title>Horoszkóp kalkulátor</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            background-image: linear-gradient(to right, #240046, #3c096c, #5a189a, #7b2cbf, #9d4edd);
+            color: whitesmoke;
+            font-family: "Audiowide", cursive;
+            font-size: xx-large;
+            text-shadow: 2px 2px #7b2cbf;
+            text-align: center;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 1rem;
+        }
+
+        input {
+            margin-left: 1rem;
+            border-color: #7b2cbf;
+            border-radius: 2px;
+            border-style: solid;
+            font-family: inherit;
+            width: 10rem;
+        }
+
+        #submit {
+            padding: 1rem;
+            font-family: inherit;
+        }
+
+        #submit:hover {
+            opacity: 0.9;
+            cursor: pointer;
+        }
+
+        img {
+            width: 5rem;
+            height: auto;
+        }
+
+        @media screen and (max-width: 650px) {
+            .row {
+            flex-direction: column;
+            align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <label for="">Add meg a neved:</label>
+            <input type="text" name="name" id="asd" placeholder="Mikorka Kálmán">
+        </div>
+        <div class="row">
+            <label for="birth">Add meg a születésnapod:</label>
+            <input type="date" name="birth" id="birth">
+        </div>
+        <button id="submit" onclick="check()">Mutasd a horoszkópom!</button>
+        <div class="zodiac" style="display: none;">
+            <h3>Üdv </h3>
+            <h4>A horoszkópod:</h4>
+            <div class="img">
+                <img src="" alt="zodiac sign">
+            </div>
+            <h4></h4>
+        </div>
+    </div>
+    <script defer>
+        const person = {
+            name: "",
+            birth: {
+                year: 0,
+                month: 0,
+                day: 0
+            }
+        };
+        
+        function calculateZodiacSign() {
+            let date = document.querySelector("input[type=date]");
+            let name = document.querySelector("input");
+        
+            person.name = name.value;
+            person.birth.year = parseInt(date.value.substring(0, 4));
+            person.birth.month = parseInt(date.value.substring(5, 7));
+            person.birth.day = parseInt(date.value.substring(8, 11));
+        
+            document.querySelectorAll(".row").forEach(item => {
+                item.style.display = "none";
+            });
+            document.querySelector("button").style.display = "none";
+        
+            let zodiacDiv = document.querySelector(".zodiac");
+            let zodiacImg = document.querySelector("img");
+            let zodiacH3 = zodiacDiv.querySelector("h3");
+            let zodiacH4 = zodiacDiv.querySelectorAll("h4")[1];
+            zodiacH3.innerHTML += person.name + "!";
+        
+            var personZodiac = parseInt(`${person.birth.month}${person.birth.day}`);
+        
+            if ((41 <= personZodiac && personZodiac <= 49) || (321 <= personZodiac && personZodiac <= 419)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201865.png";
+                zodiacH4.innerHTML = "Kos";
+            }
+            else if ((51 <= personZodiac && personZodiac <= 59) || (420 <= personZodiac && personZodiac <= 520)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201867.png";
+                zodiacH4.innerHTML = "Bika";
+            }
+            else if ((61 <= personZodiac && personZodiac <= 69) || (521 <= personZodiac && personZodiac <= 620)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201856.png";
+                zodiacH4.innerHTML = "Ikrek";
+            }
+            else if ((71 <= personZodiac && personZodiac <= 79) || (621 <= personZodiac && personZodiac <= 722)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201861.png";
+                zodiacH4.innerHTML = "Rák";
+            }
+            else if ((81 <= personZodiac && personZodiac <= 89) || (723 <= personZodiac && personZodiac <= 822)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201890.png";
+                zodiacH4.innerHTML = "Oroszlán";
+            }
+            else if ((91 <= personZodiac && personZodiac <= 99) || (823 <= personZodiac && personZodiac <= 922)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201849.png";
+                zodiacH4.innerHTML = "Szűz";
+            }
+            else if ((person.birth.month == 10 && 101 <= personZodiac && personZodiac <= 109) || (923 <= personZodiac && personZodiac <= 1022)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201880.png";
+                zodiacH4.innerHTML = "Mérleg";
+            }
+            else if (person.birth.month == 11 && (111 <= personZodiac && personZodiac <= 119) || (1023 <= personZodiac && personZodiac <= 1121)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201873.png";
+                zodiacH4.innerHTML = "Skorpió";
+            }
+            else if ((person.birth.month == 12 && 121 <= personZodiac && personZodiac <= 129) || (1121 <= personZodiac && personZodiac <= 1221)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201883.png";
+                zodiacH4.innerHTML = "Nyilas";
+            }
+            else if (((person.birth.month == 1) && (11 <= personZodiac && personZodiac <= 119)) || (1222 <= personZodiac)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201860.png";
+                zodiacH4.innerHTML = "Bak";
+            }
+            else if ((21 <= personZodiac && personZodiac <= 29) || (120 <= personZodiac && personZodiac <= 218)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201853.png";
+                zodiacH4.innerHTML = "Vízöntő";
+            }
+            else if ((31 <= personZodiac && personZodiac <= 39) || (219 <= personZodiac && personZodiac <= 320)) {
+                zodiacImg.src = "https://cdn-icons-png.flaticon.com/512/3201/3201887.png";
+                zodiacH4.innerHTML = "Halak";
+            }
+            zodiacDiv.style.display = "unset";
+        }
+        function check() {
+            if (document.querySelector("input").value.length != 0 && document.querySelector("input[type=date]").value.length > 8) {
+                calculateZodiacSign();
+            }
+            else {
+                alert("Tölts ki minden mezőt a továbblépéshez!")
+            }
+        }
+    </script>
+</body>
+</html>
